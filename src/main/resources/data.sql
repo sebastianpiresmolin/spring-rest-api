@@ -1,3 +1,12 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE category;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+/* I am aware that its not a good solution to fiddle with key checks. But i needed truncate to work
+   while im developing */
+
 INSERT INTO category (name, symbol, description)
 VALUES ('Food service', '🍔', 'Restaurant, food truck or another great food spot that you want to share.'),
        ('Vista', '👀', 'A nice view or breathtaking spot that you want to share.'),
