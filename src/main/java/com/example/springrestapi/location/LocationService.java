@@ -30,6 +30,7 @@ public class LocationService {
         location.setDescription(locationDTO.description());
         location.setLongitude(locationDTO.longitude());
         location.setLatitude(locationDTO.latitude());
+        location.setDeleted(locationDTO.isDeleted());
 
         location = locationRepository.save(location);
         return location.getId();

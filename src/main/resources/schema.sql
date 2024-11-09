@@ -21,5 +21,6 @@ CREATE TABLE IF NOT EXISTS location(
     last_modified DATE NOT NULL,
     description VARCHAR(255),
     longitude INT NOT NULL,
-    latitude INT NOT NULL
+    latitude INT NOT NULL,
+    deleted BOOLEAN NOT NULL
 );

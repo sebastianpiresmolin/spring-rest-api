@@ -57,9 +57,14 @@ public class Location {
     @Column(name = "latitude")
     private Integer latitude;
 
+    @ColumnDefault("0")
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     public Integer getId() { return id; }
 
     public void setId(Integer id) { this.id = id; }
+
 
     public String getName() { return name; }
 
@@ -67,11 +72,13 @@ public class Location {
         this.name = name;
     }
 
+
     public Integer getCategoryId () { return categoryId; }
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
+
 
     public String getUserId() { return userId; }
 
@@ -79,11 +86,13 @@ public class Location {
         this.userId = userId;
     }
 
+
     public boolean isPrivate() { return isPrivate; }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
+
 
     public Date getCreated() { return created; }
 
@@ -91,23 +100,32 @@ public class Location {
         this.created = created;
     }
 
+
     public Date getLastModified() { return lastModified; }
 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
 
+
     public String getDescription() { return description; }
 
     public void setDescription(String description) { this.description = description; }
+
 
     public Integer getLongitude() { return longitude; }
 
     public void setLongitude(Integer longitude) { this.longitude = longitude; }
 
+
     public Integer getLatitude() { return latitude; }
 
     public void setLatitude(Integer latitude) { this.latitude = latitude; }
+
+
+    public boolean isDeleted() { return deleted; }
+
+    public void setDeleted(boolean deleted) { this.deleted = deleted; }
 
 
 }
