@@ -1,4 +1,4 @@
-package com.example.springrestapi.entity;
+package com.example.springrestapi.location.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
