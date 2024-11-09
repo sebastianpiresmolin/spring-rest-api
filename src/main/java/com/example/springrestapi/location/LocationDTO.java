@@ -5,11 +5,9 @@ import com.example.springrestapi.location.entity.Location;
 public record LocationDTO(Integer id, String name, Integer categoryId, String userId,
                           boolean isPrivate, java.util.Date created,
                           java.util.Date lastModified, String description,
-                          double longitude, double latitude) {
+                          Integer longitude, Integer latitude) {
 
     public static LocationDTO fromLocation(Location location) {
-        double longitude = location.getCoordinates().getLongitude();
-        double latitude = location.getCoordinates().getLatitude();
         return new LocationDTO(location.getId(),
                 location.getName(),
                 location.getCategoryId(),
@@ -18,8 +16,8 @@ public record LocationDTO(Integer id, String name, Integer categoryId, String us
                 location.getCreated(),
                 location.getLastModified(),
                 location.getDescription(),
-                longitude,
-                latitude
+                location.getLongitude(),
+                location.getLatitude()
         );
     }
 }

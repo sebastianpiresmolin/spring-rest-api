@@ -26,6 +26,6 @@ public class CategoryController {
     @PostMapping("/categories")
     public ResponseEntity<Void> createPerson(@RequestBody CategoryDTO personDto) {
         int id = categoryService.addCategory(personDto);
-        return ResponseEntity.created(URI.create("/persons/" + id)).build();
+        return ResponseEntity.created(URI.create("/categories/" + id)).build();
     }
 }

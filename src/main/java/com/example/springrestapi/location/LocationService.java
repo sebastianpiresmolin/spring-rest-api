@@ -28,8 +28,8 @@ public class LocationService {
         location.setCreated(locationDTO.created());
         location.setLastModified(locationDTO.lastModified());
         location.setDescription(locationDTO.description());
-
-        location.setCoordinates(locationDTO.longitude(), locationDTO.latitude());
+        location.setLongitude(locationDTO.longitude());
+        location.setLatitude(locationDTO.latitude());
 
         location = locationRepository.save(location);
         return location.getId();

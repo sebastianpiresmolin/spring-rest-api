@@ -20,5 +20,6 @@ CREATE TABLE IF NOT EXISTS location(
     created DATE NOT NULL,
     last_modified DATE NOT NULL,
     description VARCHAR(255),
-    coordinates POINT
+    longitude INT NOT NULL,
+    latitude INT NOT NULL
 );

@@ -50,8 +50,12 @@ public class Location {
     private String description;
 
     @NotNull
-    @Column(name = "coordinates")
-    private Point coordinates;
+    @Column(name = "longitude")
+    private Integer longitude;
+
+    @NotNull
+    @Column(name = "latitude")
+    private Integer latitude;
 
     public Integer getId() { return id; }
 
@@ -97,29 +101,13 @@ public class Location {
 
     public void setDescription(String description) { this.description = description; }
 
-    public Point getCoordinates() { return coordinates; }
+    public Integer getLongitude() { return longitude; }
 
-    public void setCoordinates(double longitude, double latitude) {
-        this.coordinates = new Point(longitude, latitude);
-    }
+    public void setLongitude(Integer longitude) { this.longitude = longitude; }
 
-    public class Point {
-        private double longitude;
-        private double latitude;
+    public Integer getLatitude() { return latitude; }
 
-        public Point(double longitude, double latitude) {
-            this.longitude = longitude;
-            this.latitude = latitude;
-        }
-
-        public double getLongitude() {
-            return longitude;
-        }
-
-        public double getLatitude() {
-            return latitude;
-        }
-    }
+    public void setLatitude(Integer latitude) { this.latitude = latitude; }
 
 
 }
