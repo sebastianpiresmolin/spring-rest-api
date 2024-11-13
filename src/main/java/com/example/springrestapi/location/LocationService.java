@@ -12,8 +12,8 @@ public class LocationService {
 
     public LocationService(LocationRepository locationRepository) { this.locationRepository = locationRepository; }
 
-    public List<LocationDTO> getAllLocations() {
-        return locationRepository.findAll()
+    public List<LocationDTO> getAllPublicLocations() {
+        return locationRepository.findByIsPrivateFalse()
                 .stream()
                 .map(LocationDTO::fromLocation)
                 .toList();
