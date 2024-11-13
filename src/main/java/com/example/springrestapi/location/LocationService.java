@@ -4,6 +4,7 @@ import com.example.springrestapi.location.entity.Location;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class LocationService {
@@ -17,6 +18,12 @@ public class LocationService {
                 .stream()
                 .map(LocationDTO::fromLocation)
                 .toList();
+    }
+
+    public LocationDTO getPublicLocationById(Integer id) {
+        return locationRepository.findByIdAndIsPrivateFalse(id)
+                .map(LocationDTO::fromLocation)
+                .orElseThrow(() -> new IllegalArgumentException("Location not found or is private"));
     }
 
     public int addLocation(LocationDTO locationDTO) {

@@ -29,6 +29,7 @@ public class Security {
                                 .requestMatchers(GET, "/categories").permitAll()
                                 .requestMatchers(POST, "/categories").hasRole("ADMIN")
                                 .requestMatchers(GET,  "/locations").permitAll()
+                                .requestMatchers(GET,  "/locations/{id}").permitAll()
                                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

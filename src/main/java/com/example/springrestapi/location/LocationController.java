@@ -1,10 +1,7 @@
 package com.example.springrestapi.location;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
@@ -21,6 +18,11 @@ public class LocationController {
     @GetMapping("/locations")
     public List<LocationDTO> getAllPublicLocations() {
         return locationService.getAllPublicLocations();
+    }
+
+    @GetMapping("/locations/{id}")
+    public LocationDTO getPublicLocationById(@PathVariable Integer id) {
+        return locationService.getPublicLocationById(id);
     }
 
     @PostMapping("/locations")
