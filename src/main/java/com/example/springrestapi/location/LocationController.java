@@ -25,6 +25,11 @@ public class LocationController {
         return locationService.getPublicLocationById(id);
     }
 
+    @GetMapping("/locations/categories/{id}")
+    public List<LocationDTO> getPublicLocationByCategoryId(@PathVariable Integer id) {
+        return locationService.getPublicLocationByCategoryId(id);
+    }
+
     @PostMapping("/locations")
     public ResponseEntity<Void> createPerson(@RequestBody LocationDTO locationDTO) {
         int id = locationService.addLocation(locationDTO);
