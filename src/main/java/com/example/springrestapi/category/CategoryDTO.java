@@ -11,4 +11,12 @@ public record CategoryDTO(String name, String symbol, String description) {
                 category.getDescription()
         );
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

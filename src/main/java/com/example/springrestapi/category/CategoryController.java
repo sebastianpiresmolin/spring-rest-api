@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.URI;
 import java.util.List;
@@ -29,3 +31,4 @@ public class CategoryController {
         return ResponseEntity.created(URI.create("/categories/" + id)).build();
     }
 }
+
