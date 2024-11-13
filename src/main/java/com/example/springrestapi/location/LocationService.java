@@ -2,6 +2,8 @@ package com.example.springrestapi.location;
 
 import com.example.springrestapi.location.entity.Location;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +39,16 @@ public class LocationService {
         }
 
         return locations;
+    }
+
+    public List<LocationDTO> getAllLocationsAndUserLocations() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        List<Location> locations = locationRepository.findByIsPrivateFalseOrUserId(currentUsername);
+        return locations.stream()
+                .map(LocationDTO::fromLocation)
+                .collect(Collectors.toList());
     }
 
     public int addLocation(LocationDTO locationDTO) {

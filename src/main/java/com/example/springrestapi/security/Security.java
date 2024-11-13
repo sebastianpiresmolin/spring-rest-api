@@ -31,6 +31,7 @@ public class Security {
                                 .requestMatchers(GET,  "/locations").permitAll()
                                 .requestMatchers(GET,  "/locations/{id}").permitAll()
                                 .requestMatchers(GET,  "/locations/categories/{id}").permitAll()
+                                .requestMatchers(GET, "/locations/all/user").hasRole("USER")
                                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -44,7 +45,7 @@ public class Security {
     public UserDetailsService users() {
         PasswordEncoder encoder = passwordEncoder();
         UserDetails user = User.builder()
-                .username("user")
+                .username("elr0nd")
                 .password(encoder.encode("password"))
                 .roles("USER")
                 .build();
