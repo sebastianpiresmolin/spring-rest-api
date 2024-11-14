@@ -57,8 +57,6 @@ public class LocationService {
         location.setCategoryId(locationDTO.categoryId());
         location.setUserId(locationDTO.userId());
         location.setPrivate(locationDTO.isPrivate());
-        location.setCreated(locationDTO.created());
-        location.setLastModified(locationDTO.lastModified());
         location.setDescription(locationDTO.description());
         location.setLongitude(locationDTO.longitude());
         location.setLatitude(locationDTO.latitude());

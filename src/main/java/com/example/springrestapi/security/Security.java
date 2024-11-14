@@ -28,6 +28,7 @@ public class Security {
                         authorize
                                 .requestMatchers(GET, "/categories").permitAll()
                                 .requestMatchers(POST, "/categories").hasRole("ADMIN")
+
                                 .requestMatchers(GET,  "/locations").permitAll()
                                 .requestMatchers(GET,  "/locations/{id}").permitAll()
                                 .requestMatchers(GET,  "/locations/categories/{id}").permitAll()

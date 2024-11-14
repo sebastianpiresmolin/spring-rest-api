@@ -96,16 +96,7 @@ public class Location {
 
     public Date getCreated() { return created; }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-
     public Date getLastModified() { return lastModified; }
-
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
-    }
 
 
     public String getDescription() { return description; }
