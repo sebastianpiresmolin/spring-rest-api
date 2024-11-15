@@ -16,20 +16,20 @@ public class LocationService {
     public LocationService(LocationRepository locationRepository) { this.locationRepository = locationRepository; }
 
     public List<LocationDTO> getAllPublicLocations() {
-        return locationRepository.findByIsPrivateFalse()
+        return locationRepository.findByIsPrivateFalseAndDeletedFalse()
                 .stream()
                 .map(LocationDTO::fromLocation)
                 .toList();
     }
 
     public LocationDTO getPublicLocationById(Integer id) {
-        return locationRepository.findByIdAndIsPrivateFalse(id)
+        return locationRepository.findByIdAndIsPrivateFalseAndDeletedFalse(id)
                 .map(LocationDTO::fromLocation)
                 .orElseThrow(() -> new IllegalArgumentException("Location not found or is private"));
     }
 
     public List<LocationDTO> getPublicLocationByCategoryId(Integer categoryId) {
-        List<LocationDTO> locations = locationRepository.findByCategoryIdAndIsPrivateFalse(categoryId)
+        List<LocationDTO> locations = locationRepository.findByCategoryIdAndIsPrivateFalseAndDeletedFalse(categoryId)
                 .stream()
                 .map(LocationDTO::fromLocation)
                 .collect(Collectors.toList());
@@ -45,7 +45,7 @@ public class LocationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
 
-        List<Location> locations = locationRepository.findByIsPrivateFalseOrUserId(currentUsername);
+        List<Location> locations = locationRepository.findByIsPrivateFalseOrUserIdAndDeletedFalse(currentUsername);
         return locations.stream()
                 .map(LocationDTO::fromLocation)
                 .collect(Collectors.toList());
