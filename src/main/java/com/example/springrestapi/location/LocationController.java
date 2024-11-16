@@ -42,9 +42,15 @@ public class LocationController {
         return ResponseEntity.created(URI.create("/locations/" + id)).build();
     }
 
-    @PutMapping("/locations/{id}")
+    @PutMapping("/locations/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void softDeleteLocation(@PathVariable("id") Integer id) {
         locationService.softDeleteLocation(id);
+    }
+
+    @PutMapping("/locations/edit/{id}")
+    public ResponseEntity<Void> updateLocation(@PathVariable("id") Integer id, @RequestBody LocationDTO locationDTO) {
+        locationService.updateLocation(id, locationDTO);
+        return ResponseEntity.noContent().build();
     }
 }

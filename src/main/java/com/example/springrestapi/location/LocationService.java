@@ -89,4 +89,18 @@ public class LocationService {
         location.setDeleted(true);
         locationRepository.save(location);
     }
+
+    @Transactional
+    public void updateLocation(Integer id, LocationDTO locationDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        Location location = locationRepository.findByIdAndUserId(id, currentUsername)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find location with id " + id + " for user " + currentUsername));
+
+        location.setName(locationDTO.name());
+        location.setPrivate(locationDTO.isPrivate());
+        location.setDescription(locationDTO.description());
+        locationRepository.save(location);
+    }
 }
