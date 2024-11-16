@@ -11,7 +11,9 @@ public interface LocationRepository extends ListCrudRepository<Location, Integer
 
     Optional<Location> findByIdAndIsPrivateFalseAndDeletedFalse(Integer id);
 
+    Optional<Location> findByIdAndUserId(Integer id, String userId);
+
     List<Location> findByCategoryIdAndIsPrivateFalseAndDeletedFalse(Integer categoryId);
 
-    List<Location> findByIsPrivateFalseOrUserIdAndDeletedFalse(String userId);
+    List<Location> findByUserIdAndDeletedFalse(String userId);
 }

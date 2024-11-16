@@ -1,5 +1,6 @@
 package com.example.springrestapi.location;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,12 +33,18 @@ public class LocationController {
 
     @GetMapping("/locations/all/user")
     public List<LocationDTO> getAllPublicLocationsAndUserLocations() {
-        return locationService.getAllLocationsAndUserLocations();
+        return locationService.getAllUserLocations();
     }
 
     @PostMapping("/locations")
     public ResponseEntity<Void> createLocation(@RequestBody LocationDTO locationDTO) {
         int id = locationService.addLocation(locationDTO);
         return ResponseEntity.created(URI.create("/locations/" + id)).build();
+    }
+
+    @PutMapping("/locations/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void softDeleteLocation(@PathVariable("id") Integer id) {
+        locationService.softDeleteLocation(id);
     }
 }

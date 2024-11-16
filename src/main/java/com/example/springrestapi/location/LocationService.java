@@ -5,6 +5,7 @@ import com.example.springrestapi.location.entity.Location;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,11 +44,11 @@ public class LocationService {
         return locations;
     }
 
-    public List<LocationDTO> getAllLocationsAndUserLocations() {
+    public List<LocationDTO> getAllUserLocations() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
 
-        List<Location> locations = locationRepository.findByIsPrivateFalseOrUserIdAndDeletedFalse(currentUsername);
+        List<Location> locations = locationRepository.findByUserIdAndDeletedFalse(currentUsername);
         return locations.stream()
                 .map(LocationDTO::fromLocation)
                 .collect(Collectors.toList());
@@ -75,5 +76,17 @@ public class LocationService {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    @Transactional
+    public void softDeleteLocation(Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        Location location = locationRepository.findByIdAndUserId(id, currentUsername)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find location with id " + id + " for user " + currentUsername));
+
+        location.setDeleted(true);
+        locationRepository.save(location);
     }
 }
