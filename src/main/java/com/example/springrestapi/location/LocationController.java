@@ -36,7 +36,7 @@ public class LocationController {
     }
 
     @PostMapping("/locations")
-    public ResponseEntity<Void> createPerson(@RequestBody LocationDTO locationDTO) {
+    public ResponseEntity<Void> createLocation(@RequestBody LocationDTO locationDTO) {
         int id = locationService.addLocation(locationDTO);
         return ResponseEntity.created(URI.create("/locations/" + id)).build();
     }

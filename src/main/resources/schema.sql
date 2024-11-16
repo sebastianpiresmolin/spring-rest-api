@@ -22,5 +22,5 @@ CREATE TABLE IF NOT EXISTS location(
     description VARCHAR(255),
     longitude INT NOT NULL,
     latitude INT NOT NULL,
-    deleted BOOLEAN NOT NULL
+    deleted BOOLEAN DEFAULT 0 NOT NULL
 );

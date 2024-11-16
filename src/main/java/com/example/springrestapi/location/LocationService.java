@@ -13,7 +13,9 @@ public class LocationService {
 
     LocationRepository locationRepository;
 
-    public LocationService(LocationRepository locationRepository) { this.locationRepository = locationRepository; }
+    public LocationService(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
 
     public List<LocationDTO> getAllPublicLocations() {
         return locationRepository.findByIsPrivateFalseAndDeletedFalse()
@@ -52,17 +54,26 @@ public class LocationService {
     }
 
     public int addLocation(LocationDTO locationDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
         Location location = new Location();
         location.setName(locationDTO.name());
         location.setCategoryId(locationDTO.categoryId());
-        location.setUserId(locationDTO.userId());
+        location.setUserId(currentUsername);
         location.setPrivate(locationDTO.isPrivate());
         location.setDescription(locationDTO.description());
         location.setLongitude(locationDTO.longitude());
         location.setLatitude(locationDTO.latitude());
-        location.setDeleted(locationDTO.isDeleted());
 
-        location = locationRepository.save(location);
-        return location.getId();
+
+
+        try {
+            location = locationRepository.save(location);
+            return location.getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }

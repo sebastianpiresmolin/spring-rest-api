@@ -34,14 +34,14 @@ public class Location {
 
     @ColumnDefault("0")
     @Column(name = "is_private", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private boolean isPrivate;
 
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @NotNull
-    @Column(name = "last_modified", nullable = false)
+    @Column(name = "last_modified")
     private Date lastModified;
 
     @Size(max = 255)
@@ -117,6 +117,17 @@ public class Location {
     public boolean isDeleted() { return deleted; }
 
     public void setDeleted(boolean deleted) { this.deleted = deleted; }
+
+    @PrePersist
+    protected void onCreate() {
+        this.created = new Date();
+        this.lastModified = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.lastModified = new Date();
+    }
 
 
 }
