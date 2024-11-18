@@ -14,8 +14,8 @@ VALUES ('Food service', '🍔', 'Restaurant, food truck or another great food sp
        ('Gas station', '⛽', 'Gas station or service point for vehicles.' ),
        ('Obstacle', '🚧', 'Indicating that there is a obstacle on the path.');
 
-INSERT INTO location (name, category_id, user_id, is_private, created, last_modified, description, longitude, latitude, deleted)
-    VALUES ('Bree Town Sausages', 1, 'thestrider1337', 0, NOW(), NOW(), 'Very nice pig sausages right outside the Prancing Pony Inn.', 90, 50, false),
-           ('Weather Top Ruins', 2, 'nazgul1', 0, NOW(), NOW(), 'Great spot to fry some bacon and tomatoes!', 50, 50, false),
-           ('Rivendell Gas and Bread', 3, 'elr0nd', 1, NOW(), NOW(), 'Stop for supplies and rest.', -25, 36, false),
-           ('Bridge of Kazad-Dun', 4, 'somegoblin523', 0, NOW(), NOW(), 'Apparantly the bridge has been cut in half, think its going to be out of order for a while', 1, 57, false);
+INSERT INTO location (name, category_id, user_id, is_private, created, last_modified, description, coordinate, deleted)
+    VALUES ('Bree Town Sausages', 1, 'thestrider1337', 0, NOW(), NOW(), 'Very nice pig sausages right outside the Prancing Pony Inn.', ST_GeomFromText('POINT(58.17176525534734 13.550823781523555)', 4326), false),
+           ('Weather Top Ruins', 2, 'nazgul1', 0, NOW(), NOW(), 'Great spot to fry some bacon and tomatoes!', ST_GeomFromText('POINT(58.184531177099565 13.541249726251937)', 4326), false),
+           ('Rivendell Gas and Bread', 3, 'elr0nd', 1, NOW(), NOW(), 'Stop for supplies and rest.', ST_GeomFromText('POINT(58.15999011673046 13.573725726174066)', 4326), false),
+           ('Bridge of Kazad-Dun', 4, 'somegoblin523', 0, NOW(), NOW(), 'Apparantly the bridge has been cut in half, think its going to be out of order for a while', ST_GeomFromText('POINT(58.183407308037914 13.568567153373422)', 4326), false);
