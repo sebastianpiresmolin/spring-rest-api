@@ -9,6 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.geolatte.geom.G2D;
+import org.geolatte.geom.Geometries;
+
+import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
+
+
 @Service
 public class LocationService {
 
@@ -64,10 +70,19 @@ public class LocationService {
         location.setUserId(currentUsername);
         location.setPrivate(locationDTO.isPrivate());
         location.setDescription(locationDTO.description());
-        location.setLongitude(locationDTO.longitude());
-        location.setLatitude(locationDTO.latitude());
 
 
+        float lat = locationDTO.latitude();
+        float lon = locationDTO.longitude();
+
+
+        if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+            throw new IllegalArgumentException("Invalid latitude or longitude");
+        }
+
+
+        var geo = Geometries.mkPoint(new G2D(lon, lat), WGS84);
+        location.setCoordinate(geo);
 
         try {
             location = locationRepository.save(location);

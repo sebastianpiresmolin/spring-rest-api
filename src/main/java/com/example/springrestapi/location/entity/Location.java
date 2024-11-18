@@ -6,9 +6,10 @@ import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.Date;
+import org.geolatte.geom.G2D;
+import org.geolatte.geom.Point;
 
-import org.springframework.data.geo.Point;
+import java.util.Date;
 
 @Entity
 @Table(name = "location", schema = "mydatabase")
@@ -50,12 +51,8 @@ public class Location {
     private String description;
 
     @NotNull
-    @Column(name = "longitude")
-    private Integer longitude;
-
-    @NotNull
-    @Column(name = "latitude")
-    private Integer latitude;
+    @Column(name = "coordinate")
+    private Point<G2D> coordinate;
 
     @ColumnDefault("0")
     @Column(name = "deleted", nullable = false)
@@ -103,16 +100,13 @@ public class Location {
 
     public void setDescription(String description) { this.description = description; }
 
+    public Point<G2D> getCoordinate() {
+        return this.coordinate;
+    }
 
-    public Integer getLongitude() { return longitude; }
-
-    public void setLongitude(Integer longitude) { this.longitude = longitude; }
-
-
-    public Integer getLatitude() { return latitude; }
-
-    public void setLatitude(Integer latitude) { this.latitude = latitude; }
-
+    public void setCoordinate(Point<G2D> coordinate) {
+        this.coordinate = coordinate;
+    }
 
     public boolean isDeleted() { return deleted; }
 
