@@ -36,6 +36,11 @@ public class LocationController {
         return locationService.getAllUserLocations();
     }
 
+    @GetMapping("locations/area/{lon}/{lat}")
+    public List<LocationDTO> getLocationsWithin10km(@PathVariable float lon, @PathVariable float lat) {
+        return locationService.getLocationsWithin10km(lon, lat);
+    }
+
     @PostMapping("/locations")
     public ResponseEntity<Void> createLocation(@RequestBody LocationDTO locationDTO) {
         int id = locationService.addLocation(locationDTO);
