@@ -29,6 +29,7 @@ public class Security {
                                 .requestMatchers(POST, "/categories").hasRole("ADMIN")
 
                                 .requestMatchers(GET,  "/locations").permitAll()
+                                .requestMatchers(GET, "/locations/area/{lon}/{lat}").permitAll()
                                 .requestMatchers(GET,  "/locations/{id}").permitAll()
                                 .requestMatchers(GET,  "/locations/categories/{id}").permitAll()
                                 .requestMatchers(GET, "/locations/all/user").hasRole("USER")
