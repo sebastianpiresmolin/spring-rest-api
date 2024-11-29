@@ -21,6 +21,7 @@ public class Security {
                 .authorizeHttpRequests(auth->
                         auth
                                 .requestMatchers(GET, "/api/categories").permitAll()
+                                .requestMatchers(GET, "/api/categories/{name}").permitAll()
                                 .requestMatchers(POST, "/api/categories").hasAuthority("SCOPE_admin")
 
                                 .requestMatchers(GET, "/api/locations").permitAll()
@@ -40,27 +41,3 @@ public class Security {
         return http.build();
     }
 }
-
-   /* @Bean
-    public UserDetailsService users() {
-        PasswordEncoder encoder = passwordEncoder();
-        UserDetails user = User.builder()
-                .username("elr0nd")
-                .password(encoder.encode("password"))
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(encoder.encode("password"))
-                .roles("USER", "ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-}
-*/

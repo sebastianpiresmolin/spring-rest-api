@@ -17,8 +17,6 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    //TODO: get category by name
-
     @GetMapping
     public List<CategoryDTO> getAllCategories() {
         return categoryService.getAllCategories();
