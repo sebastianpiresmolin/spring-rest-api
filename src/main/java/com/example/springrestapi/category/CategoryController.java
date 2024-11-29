@@ -1,6 +1,7 @@
 package com.example.springrestapi.category;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,9 +25,11 @@ public class CategoryController {
     }
 
     @PostMapping("/categories")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public ResponseEntity<Void> createPerson(@RequestBody CategoryDTO categoryDTO) {
         int id = categoryService.addCategory(categoryDTO);
         return ResponseEntity.created(URI.create("/categories/" + id)).build();
     }
+
 }
 
