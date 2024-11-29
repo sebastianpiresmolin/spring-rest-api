@@ -2,25 +2,20 @@ package com.example.springrestapi.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.http.HttpMethod.*;
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity
 public class Security {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
@@ -28,24 +23,25 @@ public class Security {
                                 .requestMatchers(GET, "/categories").permitAll()
                                 .requestMatchers(POST, "/categories").hasRole("ADMIN")
 
-                                .requestMatchers(GET,  "/locations").permitAll()
+                                .requestMatchers(GET, "/locations").permitAll()
                                 .requestMatchers(GET, "/locations/area/{lon}/{lat}").permitAll()
-                                .requestMatchers(GET,  "/locations/{id}").permitAll()
-                                .requestMatchers(GET,  "/locations/categories/{id}").permitAll()
+                                .requestMatchers(GET, "/locations/{id}").permitAll()
+                                .requestMatchers(GET, "/locations/categories/{id}").permitAll()
                                 .requestMatchers(GET, "/locations/all/user").hasRole("USER")
                                 .requestMatchers(POST, "/locations").hasRole("USER")
                                 .requestMatchers(PUT, "/locations/delete/{id}").hasRole("USER")
                                 .requestMatchers(PUT, "/locations/edit/{id}").hasRole("USER")
-                                )
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(withDefaults())
-                .exceptionHandling(exception ->
-                        exception.authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
+
+                                .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer((oauth2) -> oauth2
+                        .jwt(Customizer.withDefaults())
+                );
         return http.build();
     }
+}
 
-    @Bean
+   /* @Bean
     public UserDetailsService users() {
         PasswordEncoder encoder = passwordEncoder();
         UserDetails user = User.builder()
@@ -67,3 +63,4 @@ public class Security {
         return new BCryptPasswordEncoder();
     }
 }
+*/
