@@ -2,8 +2,10 @@ package com.example.springrestapi.category;
 
 import com.example.springrestapi.category.entity.Category;
 
+import com.example.springrestapi.location.LocationDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -19,6 +21,19 @@ public class CategoryService {
                 .stream()
                 .map(CategoryDTO::fromCategory)
                 .toList();
+    }
+
+    public List<CategoryDTO> getCategoryByName(String name) {
+        List<CategoryDTO> locations = categoryRepository.findByName(name)
+                .stream()
+                .map(CategoryDTO::fromCategory)
+                .collect(Collectors.toList());
+
+        if (locations.isEmpty()) {
+            throw new IllegalArgumentException("No Category with provided ID found or all locations are private.");
+        }
+
+        return locations;
     }
 
     public int addCategory(CategoryDTO categoryDTO) {

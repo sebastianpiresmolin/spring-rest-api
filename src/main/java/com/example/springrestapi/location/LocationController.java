@@ -2,12 +2,14 @@ package com.example.springrestapi.location;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/locations")
 public class LocationController {
 
     LocationService locationService;
@@ -16,44 +18,48 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @GetMapping("/locations")
+    @GetMapping
     public List<LocationDTO> getAllPublicLocations() {
         return locationService.getAllPublicLocations();
     }
 
-    @GetMapping("/locations/{id}")
+    @GetMapping("/{id}")
     public LocationDTO getPublicLocationById(@PathVariable Integer id) {
         return locationService.getPublicLocationById(id);
     }
 
-    @GetMapping("/locations/categories/{id}")
+    @GetMapping("/categories/{id}")
     public List<LocationDTO> getPublicLocationByCategoryId(@PathVariable Integer id) {
         return locationService.getPublicLocationByCategoryId(id);
     }
 
-    @GetMapping("/locations/all/user")
+    @GetMapping("/all/user")
+    @PreAuthorize("isAuthenticated()")
     public List<LocationDTO> getAllPublicLocationsAndUserLocations() {
         return locationService.getAllUserLocations();
     }
 
-    @GetMapping("locations/area/{lon}/{lat}")
+    @GetMapping("/area/{lon}/{lat}")
     public List<LocationDTO> getLocationsWithin10km(@PathVariable float lon, @PathVariable float lat) {
         return locationService.getLocationsWithin10km(lon, lat);
     }
 
-    @PostMapping("/locations")
+    @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> createLocation(@RequestBody LocationDTO locationDTO) {
         int id = locationService.addLocation(locationDTO);
         return ResponseEntity.created(URI.create("/locations/" + id)).build();
     }
 
-    @PutMapping("/locations/delete/{id}")
+    @PutMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void softDeleteLocation(@PathVariable("id") Integer id) {
         locationService.softDeleteLocation(id);
     }
 
-    @PutMapping("/locations/edit/{id}")
+    @PutMapping("/edit/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> updateLocation(@PathVariable("id") Integer id, @RequestBody LocationDTO locationDTO) {
         locationService.updateLocation(id, locationDTO);
         return ResponseEntity.noContent().build();

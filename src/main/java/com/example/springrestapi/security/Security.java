@@ -18,19 +18,19 @@ public class Security {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers(GET, "/categories").permitAll()
-                                .requestMatchers(POST, "/categories").hasRole("ADMIN")
+                .authorizeHttpRequests(auth->
+                        auth
+                                .requestMatchers(GET, "/api/categories").permitAll()
+                                .requestMatchers(POST, "/api/categories").hasAuthority("SCOPE_admin")
 
-                                .requestMatchers(GET, "/locations").permitAll()
-                                .requestMatchers(GET, "/locations/area/{lon}/{lat}").permitAll()
-                                .requestMatchers(GET, "/locations/{id}").permitAll()
-                                .requestMatchers(GET, "/locations/categories/{id}").permitAll()
-                                .requestMatchers(GET, "/locations/all/user").hasRole("USER")
-                                .requestMatchers(POST, "/locations").hasRole("USER")
-                                .requestMatchers(PUT, "/locations/delete/{id}").hasRole("USER")
-                                .requestMatchers(PUT, "/locations/edit/{id}").hasRole("USER")
+                                .requestMatchers(GET, "/api/locations").permitAll()
+                                .requestMatchers(GET, "/api/locations/area/{lon}/{lat}").permitAll()
+                                .requestMatchers(GET, "/api/locations/{id}").permitAll()
+                                .requestMatchers(GET, "/api/locations/categories/{id}").permitAll()
+                                .requestMatchers(GET, "/api/locations/all/user").hasAuthority("SCOPE_user")
+                                .requestMatchers(POST, "/api/locations").hasAuthority("SCOPE_user")
+                                .requestMatchers(PUT, "/api/locations/delete/{id}").hasAuthority("SCOPE_user")
+                                .requestMatchers(PUT, "/api/locations/edit/{id}").hasAuthority("SCOPE_user")
 
                                 .anyRequest().authenticated()
                 )
