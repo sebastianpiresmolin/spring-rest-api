@@ -40,7 +40,11 @@ public class LocationService {
     }
 
     public List<LocationDTO> getPublicLocationByCategoryId(Integer categoryId) {
-        List<LocationDTO> locations = locationRepository.findByCategoryIdAndIsPrivateFalseAndDeletedFalse(categoryId)
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final String currentUsername = authentication.getName();
+
+        List<LocationDTO> locations = locationRepository
+                .findByCategoryIdAndIsPrivateFalseAndDeletedFalseOrUserIdAndDeletedFalse(categoryId, currentUsername)
                 .stream()
                 .map(LocationDTO::fromLocation)
                 .collect(Collectors.toList());
